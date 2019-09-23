@@ -14,6 +14,10 @@ router.get('/hi', (req, res) => {
 });
 
 
+router.get('/hello', (req, res) => {
+  res.status('200').send("<h1>Hello all.......................</h1>");
+});
+
 // retrieve all musicians from data store
 router.get('/all', (req, res) => {
   const { musician } = req.app.locals;
