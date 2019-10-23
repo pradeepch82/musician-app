@@ -9,6 +9,12 @@ router.get('/health', (req, res) => {
   res.status('200').send("Status: ok!");
 });
 
+router.get('/music', (req, res) => {
+  res.status('200').send("Playing The Music");
+});
+
+
+
 router.get('/today', (req, res) => {
   res.status('200').send("<h1>Today is "+new Date()+" </h1>");
 });
