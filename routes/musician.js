@@ -16,7 +16,7 @@ router.get('/music', (req, res) => {
 
 
 router.get('/today', (req, res) => {
-  res.status('200').send("<h1>Today is "+new Date()+" </h1>");
+  res.status('200').send("<font color='green' size='7'>Hi all,Today is "+new Date()+" </font>");
 });
 
 router.get('/hi', (req, res) => {
