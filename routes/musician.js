@@ -14,20 +14,6 @@ router.get('/music', (req, res) => {
 });
 
 
-
-router.get('/today', (req, res) => {
-  res.status('200').send("<font color='green' size='7'>Hi all,Today is "+new Date()+" </font>");
-});
-
-router.get('/hi', (req, res) => {
-  res.status('200').send("Hi all.......................");
-});
-
-
-router.get('/hello', (req, res) => {
-  res.status('200').send("<h1>Hello all.......................</h1>");
-});
-
 // retrieve all musicians from data store
 router.get('/all', (req, res) => {
   const { musician } = req.app.locals;
