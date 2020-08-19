@@ -13,6 +13,11 @@ router.get('/music', (req, res) => {
   res.status('200').send("Playing The Music");
 });
 
+router.get('/classical', (req, res) => {
+  res.status('200').send("Playing The Classical Music");
+});
+
+
 
 // retrieve all musicians from data store
 router.get('/all', (req, res) => {
