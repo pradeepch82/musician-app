@@ -9,6 +9,17 @@ router.get('/health', (req, res) => {
   res.status('200').send("Hello Rejendra Status: ok!");
 });
 
+
+
+router.get('/hi', (req, res) => {
+  res.status('200').send("Hi all,Hope u are enjoying the music");
+});
+
+
+router.get('/hello', (req, res) => {
+   res.status('200').send("Hello all,Hope u are enjoying the classical music");
+});
+
 router.get('/music', (req, res) => {
   res.status('200').send("Playing The Music");
 });
