@@ -15,6 +15,11 @@ router.get('/hi', (req, res) => {
   res.status('200').send("Hi all,Hope u are enjoying the music");
 });
 
+router.get('/today', (req, res) => {
+  res.status('200').send("Today  is :"+new Date());
+});
+
+
 
 router.get('/hello', (req, res) => {
    res.status('200').send("Hello all,Hope u are enjoying the classical music");
