@@ -1,0 +1,380 @@
+In most cases, we recommend using controlled components to implement forms. In a controlled component, form data is handled by a React component.
+The alternative is uncontrolled components, where form data is handled by the DOM itself.
+
+UnControlled Components
+========================
+To write an uncontrolled component, instead of writing an event handler for every state update, you can use a ref to get form values from the DOM.
+
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.input = React.createRef();
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.input.current.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" ref={this.input} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+
+Example2
+=========
+
+export default class StudentForm extends Component {
+constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.studentId = React.createRef();
+    this.studentName = React.createRef();
+    this.studentAddress = React.createRef();
+}
+
+handleSubmit(event) {
+
+    let details=`
+                 Id      :${this.studentId.current.value}
+                 Name    :${this.studentName.current.value}
+                 Address :${this.studentAddress.current.value}`;
+
+    alert('A Student details was submitted:\n' + details);
+    //event.preventDefault();
+  }
+
+  render() {
+        return (
+            <div className="text-danger">
+            <h2>Student UnControlled Form </h2>
+ 
+             <form  onSubmit={this.handleSubmit}>
+             <div className="form-group">
+             <label>Student Id</label>     
+             <input type="text"   defaultValue="123" ref={this.studentId}  class="form-control" id="id" placeholder="Enter Student Id" name="id"/>
+             </div>
+             
+             <div className="form-group">
+             <label>Student Name</label>     
+             <input type="text"  defaultValue="Pradeep Chinchole"  ref={this.studentName} class="form-control" id="name" placeholder="Enter Student Name" name="id"/>
+             </div>
+             
+             <div className="form-group">
+             <label>Student Address</label>     
+             <input type="text" defaultValue="Shivane Pune" ref={this.studentAddress}  class="form-control" id="address" placeholder="Enter Student Address" name="id"/>
+             </div>
+             <button type="submit" class="btn btn-primary">Submit</button>
+             </form>
+
+            </div>
+        )
+    }
+}
+
+
+
+
+
+Default Values
+==============
+In the React rendering lifecycle, the value attribute on form elements will override the value in the DOM.
+With an uncontrolled component, you often want React to specify the initial value, but leave subsequent updates uncontrolled. To handle this case, you can specify a defaultValue attribute instead of value. 
+Changing the value of defaultValue attribute after a component has mounted will not cause any update of the value in the DOM.
+
+render() {
+  return (
+    <form onSubmit={this.handleSubmit}>
+      <label>
+        Name:
+        <input
+          defaultValue="Bob"
+          type="text"
+          ref={this.input} />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  );
+}
+
+Controlled Components
+=====================
+1.In a controlled component, the form data is handled by the state within the component. 
+2.The state within the component serves as “the single source of truth” for the input elements that are rendered by the component
+
+A controlled component is bound to a value, and its changes will be handled in code by using event-based callbacks. 
+Here, the input form element is handled by the react itself rather than the DOM. 
+In this, the mutable state is kept in the state property and will be updated only with setState() method.
+
+Controlled components have functions that govern the data passing into them on every onChange event occurs. 
+This data is then saved to state and updated with setState() method. 
+It makes component have better control over the form elements and data.
+
+
+class CourseForm extends Component {
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+                id:1234,
+                name:'React',
+                price:2000
+        };
+    
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+    
+
+      
+       handleSubmit(event) {
+        alert('Your Course Details: ' + this.state);
+        event.preventDefault();
+        }
+
+      handleInputChange(event) {
+        const target = event.target;
+        const name = target.name;
+        const value = target.value;
+    
+        console.log(target,name,value);
+
+        this.setState({
+          [event.target.name]: event.target.value
+        });
+      }
+
+
+    render() {
+        return (
+            <div className="text-primary">
+                <h2>Course Controlled Form </h2>
+ 
+ <form  onSubmit={this.handleSubmit}>
+ <div className="form-group">
+ <label>Course Id</label>     
+ <input type="text" value={this.state.id}  className="form-control" id="id" placeholder="Enter Course Id" name="id"  onChange={this.handleInputChange} />
+ </div>
+ 
+ <div className="form-group">
+ <label>Course Name</label>     
+ <input type="text"  value={this.state.name}   className="form-control" id="name" placeholder="Enter Course Name" onChange={this.handleInputChange}/>
+ </div>
+ 
+ <div className="form-group">
+ <label>Course Price </label>     
+ <input type="text" value={this.state.price}  className="form-control" id="price" placeholder="Enter Course Price" onChange={this.handleInputChange}/>
+ </div>
+ <button type="submit" className="btn btn-primary">Submit</button>
+ </form>
+    <pre>
+    Course Id :{this.state.id}  
+    Name      :{this.state.name}  
+    Price     :{this.state.price}  
+        
+    </pre>
+
+
+</div>
+        )
+    }
+}
+
+export default CourseForm
+
+Context API
+===========
+
+Context
+Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props 
+(e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
+
+When to Use Context
+Before You Use Context
+API
+
+React.createContext
+Context.Provider
+Class.contextType
+Context.Consumer
+Context.displayName
+
+
+=============================
+State Lifting
+
+Parent.js
+============
+
+export class Parent extends Component {
+    state={
+        message:'Parent Message',
+        childMessage:''
+    }
+
+     getChildMessage=(childMessage)=>{
+        console.log("Clicked ...");
+
+           this.setState({
+    childMessage:childMessage
+  });
+
+}
+    render() {
+        return (
+            <div>
+                <h2>Passing the event handler as a props to Child Component</h2>
+                <h3> Parent Message : {this.state.message}</h3>
+                <h3> Child Message : {this.state.childMessage}</h3>
+    
+                
+                <Child  childChanged={this.getChildMessage}/>
+            </div>
+        )
+    }
+}
+
+Child.js
+=========
+
+export class Child extends Component {
+    state={
+        message:'Child Message:'
+        }
+}
+render() {
+        console.log(this.props)
+        let {childChanged}=this.props;
+        let {message}=this.state;
+        
+        return (
+            <div>
+                <h2>Child Message :{this.state.message}</h2>
+                <button onClick={()=>childChanged(message+" :"+Math.random()*10)}>Get Child Message</button>
+
+            </div>
+        )
+    }
+}
+
+
+Higher-Order Components
+========================
+A higher-order component (HOC) is an advanced technique in React for reusing component logic. 
+HOCs are not part of the React API, per se. They are a pattern that emerges from React’s compositional nature.
+
+Concretely, a higher-order component is a function that takes a component and returns a new component.
+
+  Example
+  =========
+  
+  const EnhancedComponent = higherOrderComponent(WrappedComponent);
+
+
+class HoverCounter extends Component {
+    // constructor(props) {
+    //   super(props)
+    
+    //   this.state = {
+    //      count:0
+    //   };
+    // };
+    
+  
+    // incrementCount=()=>{
+    //     this.setState(prevState=>{
+    //           return {count:prevState.count+1}
+    //     })
+    // }
+
+   
+    render() {
+        let {count,incrementCount}=this.props;
+
+        return (
+            <div>
+              <h2 onMouseOver={incrementCount}>{this.props.name} Hoverd {count} times</h2>
+            </div>
+        )
+    }
+}
+
+export default UpdatedComponent(HoverCounter)
+
+class ClickCounter extends Component {
+
+    // constructor(props) {
+    //   super(props)
+    
+    //   this.state = {
+    //      count:0
+    //   };
+    // };
+    
+    // incrementCount=()=>{
+    //     this.setState(prevState=>{
+    //           return {count:prevState.count+1}
+    //     })
+    // }
+
+     render() {
+
+        let {count,incrementCount}=this.props;
+
+         return (
+             <div>
+                 <button onClick={incrementCount}>{this.props.name} Clicked {count} times</button>
+             </div>
+         )
+     }
+}
+
+export default UpdatedComponent(ClickCounter)
+
+import React from 'react';
+
+const UpdatedComponent=OriginalComponent=>{
+class NewComponent extends React.Component{
+
+    constructor(props) {
+        super(props)
+      
+        this.state = {
+           count:0
+        };
+      };
+      
+    
+      incrementCount=()=>{
+          this.setState(prevState=>{
+                return {count:prevState.count+1}
+          })
+      }
+  
+ render(){
+    return <OriginalComponent   name="Pradeep"  count={this.state.count}  incrementCount={this.incrementCount}/>;
+}
+
+}
+return NewComponent
+}
+
+export default UpdatedComponent
+
+
+
+
+
+
